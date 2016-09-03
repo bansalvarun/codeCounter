@@ -56,7 +56,7 @@
       				{% if user.id %}
       				<a class="dropdown-toggle" href="#" data-toggle="dropdown">Hello, {{user.first_name}} {{user.last_name}}<strong class="caret"></strong></a>
       				<div class="dropdown-menu" style="padding: 15px; padding-bottom: 10px;">
-      				<button class="btn btn-default" onclick="location.href='{% url 'account_logout' %}?next={{request.path}}';">Sign Out</button>
+      				<button class="btn btn-default" onclick="location.href='{% url 'account_logout' %}';">Sign Out</button>
       				</div>
       				{% else %}
       				<a href="/registerAsStudent/">Sign In As A Student</a>
