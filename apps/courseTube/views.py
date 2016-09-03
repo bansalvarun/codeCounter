@@ -94,6 +94,7 @@ def institutes(request):
 
 def institute(request, id):
 	args = {}
+	args.update(csrf(request))
 	institute = Institute.objects.get(pk=id)
 	args["institute"] = institute
 	return render(request, 'courseTube/institute.html', args)
@@ -124,4 +125,16 @@ def compare(request):
 
 
 
-
+@login_required
+def postFeedback(request):
+	student = get_object_or_404(Student, user = request.user)
+	if request.method == "POST":
+		institute = get_object_or_404(Institute, pk=request.POST["instituteId"])
+		review = Review(
+			student = student,
+			institute = institute, 
+			description = request.POST["description"],
+			qualityOfEducation = request.POST["qualityOfEducation"]
+			)
+		review.save()
+		return redirect("/institute/"+request.POST["instituteId"])
