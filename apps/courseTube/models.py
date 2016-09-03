@@ -74,7 +74,7 @@ class Course(Model):
 	name = CharField(max_length=100)
 	tags = ManyToManyField(Tag)
 	faculty = ManyToManyField(Faculty, blank=True)
-	institute = ForeignKey(Institute, blank=True, null=True)
+	institute = ForeignKey(Institute, blank=True, null=True, related_name="coursesInstitute")
 	students = ManyToManyField(Student, blank=True)
 	def __unicode__(self):
 		return self.name
@@ -90,12 +90,13 @@ class Enroll(Model):
 
 class Review(Model):
 	student = ForeignKey(Student)
-	institute = ForeignKey(Institute)
-	infrastructure = IntegerField() #On a scale of 1-5
-	qualityOfEducation = IntegerField() #On a scale of 1-5
-	workLoad = IntegerField() #number of hours per week
-	feesWorth = IntegerField() #On a scale of 1-5
-	postCourseBenifits = IntegerField() #On a scale of 1-5
+	when = DateTimeField(default=timezone.now)
+	institute = ForeignKey(Institute, related_name="reviews")
+	infrastructure = IntegerField(blank=True, null=True) #On a scale of 1-5
+	qualityOfEducation = IntegerField(blank=True, null=True) #On a scale of 1-5
+	workLoad = IntegerField(blank=True, null=True) #number of hours per week
+	feesWorth = IntegerField(blank=True, null=True) #On a scale of 1-5
+	postCourseBenifits = IntegerField(blank=True, null=True) #On a scale of 1-5
 	postCourseBenifitsText = CharField(max_length=100, blank=True, null=True) 
 	recommendedFurther = BooleanField(default = False) #do you want to recommend this course to your friends
 	description = TextField(blank=True, null=True)

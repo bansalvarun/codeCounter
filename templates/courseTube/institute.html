@@ -3,6 +3,10 @@
 
 {% block title %}Projects{% endblock %}
 {% block body %}
+	<script src="{%static 'js/jquery.rating.js' %}"></script>
+	<link rel="stylesheet" href="{%static 'css/jquery.rating.css' %}">
+	<!-- <link rel="stylesheet" href="{%static 'image/star.gif' %}"> -->
+	<!-- <script src="{%static 'image/star.gif' %}"></script> -->
 
     <!-- Page Content -->
     <div class="container">
@@ -35,50 +39,82 @@
 
                 <div class="row">
                 <!-- TO be removed -->
+                	{% for course in institute.coursesInstitute.all %}
                         <div class="col-md-12">
                             {{course.coursename}}
                             <span class="pull-right">Starts on {{course.date}}</span>
                             <p>{{course.description}}</p>
                         </div>
-                                                <div class="text-right">
+                        <div class="text-right">
                             <a class="btn btn-success">Enroll</a>
                         </div>
                     </div>
-                <!-- till here -->
-                    <hr>
-                    {% for course in courses %}
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{course.coursename}}
-                            <span class="pull-right">Starts on {{course.date}}</span>
-                            <p>{{course.description}}</p>
-                        </div>
-                                                <div class="text-right">
-                            <a class="btn btn-success">Enroll</a>
-                        </div>
-                    </div>
-
                     <hr>
                     {% endfor %}
-
-
+                <!-- till here -->
                 </div>
-                <div class="well">
 
-                    <div class="text-right">
-                        <a class="btn btn-success">Leave a Review</a>
+                <div class="panel panel-default">
+                	{% if user.id %}
+                    <div class="text-right panel-body">
+                        <form method="POST" action="/postFeedback/">     
+                        	{% csrf_token %}               
+                        	<input style="display:none" type="" name="instituteId" value="{{institute.id}}">
+                        	<div class="row">
+                        	<div class="col-md-6">
+				                <div class="form-group">
+				                  <label class="col-md-4 control-label" for="textinput">Quality Of Education</label>  
+				                  <div class="col-md-8">                        
+									<select class="form-control" name="qualityOfEducation"> 
+									    <option value="1">Did not like</option>
+									    <option value="2">Ok</option>
+									    <option value="3" selected="selected">Liked</option>
+									    <option value="4">Better than school</option>
+									    <option value="5">Nothing can be better!</option>
+									</select>
+								  </div>
+							    </div><br/>
+						    </div>
+						    </div>
+
+                        	<div class="row">
+                        	<div class="col-md-6">
+                        		<br/>
+				                <div class="form-group">
+				                  <label class="col-md-4 control-label" for="textinput">Comments </label>  
+				                  <div class="col-md-8">                        
+				                  	<textarea type="text" class="form-control" name="description"></textarea>
+								  </div>
+							    </div>
+						    </div>
+						    </div>
+
+                        	<div class="row">
+                        	<div class="col-md-6">
+                        		<br/>
+				                <div class="form-group">
+				                  <label class="col-md-9 control-label" for="textinput">Would you recommend this course to your friend? </label>  
+				                  <div class="col-md-3">                        
+				                  	<input type="checkbox" name="">
+								  </div>
+							    </div>
+						    </div>
+						    </div>
+
+                        <button class="btn btn-success" type="submit" >Leave a Review</button>
+                        </form>
                     </div>
-
+                    {% endif %}
                     <hr>
-
-                    {% for review in reviews %}
-                    <div class="row">
-                        <div class="col-md-12">
-                            <span class="pull-right">{{review.date}}</span>
+                    {% for review in institute.reviews.all %}
+                    <div class="row" style="margin:20px">
+                        <div class="col-md-10">
+                            <span class="pull-right">Quality of education: {{review.qualityOfEducation}}</span>
                             <p>{{review.description}}</p>
+                            <span>--{{review.student}},</span>
+                            <span >{{review.when}}</span>
                         </div>
                     </div>
-
                     <hr>
                     {% endfor %}
 
@@ -89,4 +125,20 @@
         </div>
 
     </div>
+    <script type="text/javascript">
+		$(document).ready(function(){
+			//Turn all the select boxes into rating controls
+		    $(".rating").rating();
+		
+			//Show that we can bind on the select box
+			$("#serialStar2").bind("change", function(){
+				$('#serialString2').text( $('#serialStar2').serialize() );
+			});
+			
+			$("#serialStar").rating();
+			
+		});		
+	
+	</script>
+
 {% endblock %}
