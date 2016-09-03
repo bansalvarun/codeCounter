@@ -25,7 +25,7 @@ def registerAsStudent(request):
 	except:
 		student = Student(user = user)
 		student.save()
-	return render(request, 'demo/home.html')
+	return redirect("/")
 
 
 @login_required
@@ -46,7 +46,7 @@ def registerAsInstitute(request):
 	instituteProfile = InstituteProfile(user = user)
 	args["instituteProfile"] = instituteProfile
 
-	return render(request, 'demo/home.html')
+	return redirect("/")
 
 
 @login_required
