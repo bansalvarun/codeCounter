@@ -90,4 +90,38 @@ def institutes(request):
 	args = {}
 	institutes = Institute.objects.all()
 	args["institutes"] = institutes
-	return render(request, 'courseTube/institute.html', args) 
+	return render(request, 'courseTube/institutes.html', args) 
+
+def institute(request, instituteId):
+	args = {}
+	institute = Institute.objects.get(pk=instituteId)
+	args["institute"] = institute
+	return render(request, 'courseTube/institute.html', args)
+
+def category(request, categoryId):
+	args = {}
+	institutes = Institute.objects.all()
+	args["institutes"] = institutes
+	return render(request, 'courseTube/category.html', args) 
+
+def tag(request, tagId):
+	args = {}
+	tag = tag.objects.get(pk=tagId)
+	args["tag"] = tag
+	return render(request, 'courseTube/tag.html', args) 
+
+def tags(request):
+	args = {}
+	tags = Tag.objects.all()
+	args["tags"] = institutes
+	return render(request, 'courseTube/tags.html', args) 
+
+def compare(request):
+	args = {}
+	institutes = Institute.objects.all()
+	args["institutes"] = institutes
+	return render(request, 'courseTube/institutes.html', args) 
+
+
+
+

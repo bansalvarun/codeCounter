@@ -57,7 +57,7 @@ class Institute(Model):
 	totalNumberStudents = IntegerField()
 	totalNumberFaculty = IntegerField()
 	rating = FloatField(default = 0)
-	
+	category = CharField(max_length=100, blank=True, null=True)
 
 class Faculty(Model):
 	name = CharField(max_length=100)
