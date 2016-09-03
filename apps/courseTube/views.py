@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, render_to_response, get_object_or_404
-
+from django.http import HttpResponse
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -9,7 +9,10 @@ from models import *
 # Create your views here.
 
 def home(request):
-	return render(request, 'demo/home.html')
+	args = {}
+	institutes = Institute.objects.all()
+	args["institutes"] = institutes
+	return render(request, 'demo/home.html', args)
 
 
 @login_required
@@ -33,6 +36,10 @@ def registerAsInstitute(request):
 		instituteProfile = InstituteProfile.objects.get(user = request.user)
 		print instituteProfile
 	except:
+		try:
+			student = Student.objects.get(user = request.user)
+			return HttpResponse("Sorry, You are registered as a Student!")
+
 		instituteProfile = InstituteProfile(user = user)
 		instituteProfile.save()
 	args["user"] = user
