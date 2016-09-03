@@ -92,9 +92,9 @@ def institutes(request):
 	args["institutes"] = institutes
 	return render(request, 'courseTube/institutes.html', args) 
 
-def institute(request, instituteId):
+def institute(request, id):
 	args = {}
-	institute = Institute.objects.get(pk=instituteId)
+	institute = Institute.objects.get(pk=id)
 	args["institute"] = institute
 	return render(request, 'courseTube/institute.html', args)
 
