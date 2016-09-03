@@ -18,7 +18,7 @@
             <div class="col-md-9">
 
                 <div class="thumbnail">
-                    <img class="img-responsive" src="{{institute.logo}}" alt="hello">
+                    <img class="img-responsive" src="{{institute.logo}}" alt="hello" style="padding:px;">
                     <div class="caption-full">
                         <h4><a href="{{institute.instituteUrl}}">{{institute.name}}</a>
                         </h4>
@@ -75,6 +75,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <span class="pull-right">{{review.date}}</span>
+                            <div class="pull-right">{{review.rating}}</div>
+
                             <p>{{review.description}}</p>
                         </div>
                     </div>
