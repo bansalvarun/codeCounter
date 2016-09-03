@@ -39,9 +39,9 @@ def registerAsInstitute(request):
 		try:
 			student = Student.objects.get(user = request.user)
 			return HttpResponse("Sorry, You are registered as a Student!")
-
-		instituteProfile = InstituteProfile(user = user)
-		instituteProfile.save()
+		except:		
+			instituteProfile = InstituteProfile(user = user)
+			instituteProfile.save()
 	args["user"] = user
 	instituteProfile = InstituteProfile(user = user)
 	args["instituteProfile"] = instituteProfile
