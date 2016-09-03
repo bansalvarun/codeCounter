@@ -27,6 +27,8 @@ urlpatterns = [
     url(r'^register_institute/', registerInstitute, name = "registerInstitute"),
     url(r'^institute/(?P<id>.+)/', institute, name = "institute"),
     url(r'^institutes/', institutes, name = "institutes"),
+    url(r'^tags/', tags, name = "tags"),
+    url(r'^tag/(?P<id>.+)/', tag, name = "tag"),
     # url(r'^institutesRequests/', institutesRequests, name = "institutesRequests"),
 
 ]

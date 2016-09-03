@@ -40,6 +40,8 @@ class Institute(Model):
 	deleted = BooleanField(default = False)
 	name = CharField(max_length=100, blank=True, null=True)
 	logo = CharField(max_length=100, blank=True, null=True)
+	instituteUrl = CharField(max_length=100, blank=True, null=True)
+	description = TextField(blank=True, null=True)
 	email = EmailField(blank=True, null=True)
 	phone = CharField(max_length=100, blank=True, null=True)
 	address = TextField()

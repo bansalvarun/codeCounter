@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}Projects{% endblock %}
+{% block body %}
+
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class=" main">
+        	{% for institute in institutes %}
+				<div class="panel panel-default">
+				  <div class="panel-heading">
+				  	<div class="row">
+					  	<div class="col-md-6" style="float:left">
+						    <h3 class="panel-title">
+						    	{{institute.name}}, {{institute.state}}, {{institute.country}}
+						    </h3>
+						  </div>
+					  </div>
+					  	<div class="col-md-6" style="float:right">
+						    <h3 class="panel-title">
+						    	{{institute.name}}, {{institute.state}}, {{institute.country}}
+						    </h3>
+						  </div>
+					  </div>
+
+				  </div>
+				  <div class="panel-body">
+				    Panel content
+				  </div>
+				</div>
+				<div class="demo-card-wide mdl-card mdl-shadow--2dp">
+				  <div class="mdl-card__title">
+				    <h2 class="mdl-card__title-text">{{institute.name}}, {{institute.state}}, {{institute.country}}</h2>
+				  </div>
+				  <div class="mdl-card__supporting-text">
+				    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+				    Mauris sagittis pellentesque lacus eleifend lacinia...
+				  </div>
+				  <div class="mdl-card__actions mdl-card--border">
+				    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+				      Get Started
+				    </a>
+				  </div>
+				  <div class="mdl-card__menu">
+				  </div>
+				</div>
+        		<br/>
+        	{% endfor %}
+	       </div>
+      </div>
+    </div>
+
+
+
+{% endblock %}
