@@ -44,41 +44,66 @@
       <div class="main">
         <div class="row">
           <div class="col-md-3">
-            
+          <h4 align="right"><span >Quick Links</span></h4>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Entrance Exams</h3>
+                <div class="panel-body">
+                  <button class="btn btn-default" disabled="">IIT-JEE</button>
+                  <button class="btn btn-default" disabled="">AIPMT</button>
+                  
+                </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Computer Science</h3>
+                <div class="panel-body">
+                  <button class="btn btn-default" disabled="">Coding Blocks</button>
+                  <button class="btn btn-default" disabled="">Coding Ninja</button>
+                </div>
+                </div>
+              </div>
+
+
           </div>
           <div class="col-md-6">
+          <h4 align="center"><span >Most Recent Courses</span></h4>
             {% for institute in institutes %}
-              <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
-                <header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white">
-                  <i class="material-icons">play_circle_filled</i>
-                </header>
-                <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
-                  <div class="mdl-card__supporting-text">
-                    <h4>{{institute.name}}, {{institute.city}}</h4>
-                    Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Nostrud in laboris labore nisi amet do dolor eu fugiat consectetur elit cillum esse.
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <div class="row">
+                  <div class="col-md-6" style="float:left">
+                    <h3 class="panel-title">{{institue.image}}</h3>
                   </div>
-                  <div class="mdl-card__actions">
-                    <a href="#" class="mdl-button">Read our features</a>
+                  <div class="col-md-6" style="float:right">
+                    <h3 class="panel-title">{{institute.name}}, {{institute.state}} {{institute.rating}}</h3>
+                  </div>
+                  </div>
+                  <div class="panel-body">
+                    {{institute.description}}
                   </div>
                 </div>
-                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn1">
-                  <i class="material-icons">more_vert</i>
-                </button>
-                <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn1">
-                  <li class="mdl-menu__item">Lorem</li>
-                  <li class="mdl-menu__item" disabled>Ipsum</li>
-                  <li class="mdl-menu__item">Dolor</li>
-                </ul>
-              </section>
+              </div>
             {% endfor %}
-            
+          </div>
+          <div class="col-md-3">
+          <h4 align="right"><span >Trending</span></h4>
+            {% for institute in institutes %}
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">{{institute.name}}, {{institute.state}} {{institute.rating}}</h3>
+                <div class="panel-body">
+                  {{institute.description}}
+                </div>
+                </div>
+              </div>
+            {% endfor %}            
           </div>
 
-          <div class="col-md-3">
-            
-          </div>
-        </div>
-      </div>
+
+    </div>
+    </div>
     </div>
 
     
