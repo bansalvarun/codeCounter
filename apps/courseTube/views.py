@@ -86,3 +86,8 @@ def requestInstitute(request):
 # def institutesRequests(request):
 	
 
+def institutes(request):
+	args = {}
+	institutes = Institute.objects.all()
+	args["institutes"] = institutes
+	return render(request, 'courseTube/institute.html', args) 

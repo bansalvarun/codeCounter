@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^registerAsStudent/', registerAsStudent, name = "registerAsStudent"),
     url(r'^registerAsInstitute/', registerAsInstitute, name = "registerAsInstitute"),
     url(r'^register_institute/', registerInstitute, name = "registerInstitute"),
+    url(r'^institutes/', institutes, name = "institutes"),
     # url(r'^institutesRequests/', institutesRequests, name = "institutesRequests"),
 
 ]
