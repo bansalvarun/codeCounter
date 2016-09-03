@@ -39,6 +39,7 @@ class Institute(Model):
 	listed = BooleanField(default = False)
 	deleted = BooleanField(default = False)
 	name = CharField(max_length=100, blank=True, null=True)
+	logo = CharField(max_length=100, blank=True, null=True)
 	email = EmailField(blank=True, null=True)
 	phone = CharField(max_length=100, blank=True, null=True)
 	address = TextField()
