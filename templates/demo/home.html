@@ -10,8 +10,11 @@
     <div class="container-fluid">
       <div class="row">
         <div class=" main">
-
-
+        	{% for institute in institutes %}
+        		{{institute.name}}<br/>
+        		{{institute.address}}<br/>
+        		{{institute.city}}<br/><br/>
+        	{% endfor %}
 	       </div>
       </div>
     </div>
