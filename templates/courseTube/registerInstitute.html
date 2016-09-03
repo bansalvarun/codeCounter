@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}Add Insitute{% endblock %}
+
+
+{% block body %}
+  <script src="{%static 'js/countries.js' %}"></script>
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class=" main">
+          <h4 class="page-header">Welcome, Please register your Institute</h4>
+          <form class="form-horizontal" action="#" method="POST" accept-charset="UTF-8">
+            {% csrf_token %}
+            <!-- Text input-->
+            <div class="form-group row">
+              <label class="col-md-2 control-label" for="textinput">Institute Name</label>  
+              <div class="col-md-3">
+              <input required id="nameBroker" name="name" type="text" class="form-control input-md" >
+              <!-- <span class="help-block">help</span>   -->
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">            
+                <div class="form-group">
+                  <label class="col-md-4 control-label" for="textinput">Country</label>  
+                  <div class="col-md-6">
+                    <select id="country" class="form-control" name ="country"></select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">            
+                <div class="form-group">
+                  <label class="col-md-4 control-label" class="form-control" for="textinput">State</label>  
+                  <div class="col-md-6">
+                    <select name ="state" id ="state" class="form-control">
+                      <option value="" selected disabled>Please select</option>
+                      
+                    </select>             
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Textarea -->
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="textarea">Address</label>
+              <div class="col-md-3">
+                <textarea required class="form-control" name="address"></textarea>
+              </div>
+            </div>            
+            <!-- Text input-->
+            <div class="form-group row">
+              <label class="col-md-2 control-label" for="textinput">PinCode</label>  
+              <div class="col-md-3">
+              <input required id="nameBroker" name="pincode" type="text" class="form-control input-md" >
+              <!-- <span class="help-block">help</span>   -->
+              </div>
+            </div>
+            <!-- Text input-->
+            <div class="form-group row">
+              <label class="col-md-2 control-label" for="textinput">Map Location</label>  
+              <div class="col-md-3">
+              <input required id="nameBroker" name="mapLocation" type="text" class="form-control input-md" >
+              <!-- <span class="help-block">help</span>   -->
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">            
+                <div class="form-group">
+                  <label class="col-md-4 control-label" for="textinput">Tags</label>  
+                  <div class="col-md-6">
+                    <select class="form-control" multiselect>
+                      <option value="" selected disabled>Please select</option>
+                      {% for tag in tags %}
+                          <option>{{country}}</option>
+                      {% endfor %}            
+                    </select>             
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">            
+                <div class="form-group">
+                  <label class="col-md-4 control-label" for="textinput">Facilities</label>  
+                  <div class="col-md-6">
+                    <select class="form-control" multiselect>
+                      <option value="" selected disabled>Please select</option>
+                      {% for facility in facilities %}
+                          <option>{{facility}}</option>
+                      {% endfor %}            
+                    </select>             
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">            
+                <div class="form-group">
+                  <label class="col-md-4 control-label" for="textinput">Week days</label>  
+                  <div class="col-md-6">
+                    <select class="form-control" multiselect>
+                      <option value="" selected disabled>Please select</option>
+                      {% for weekday in weekdays %}
+                          <option>{{weekday}}</option>
+                      {% endfor %}            
+                    </select>             
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group row">
+              <label class="col-md-2 control-label" for="textinput">Opens</label>  
+              <div class="col-md-3">
+              <input required id="nameBroker" name="startHour" type="number" class="form-control input-md" >
+              <!-- <span class="help-block">help</span> -->
+              </div>
+            </div>
+            <!-- Text input-->
+            <div class="form-group row">
+              <label class="col-md-2 control-label" for="textinput">Closes at</label>  
+              <div class="col-md-3">
+              <input required id="nameBroker" name="endHour" type="number" class="form-control input-md" >
+              <!-- <span class="help-block">help</span> -->
+              </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group row">
+              <label class="col-md-2 control-label" for="textinput">Established Since</label>  
+              <div class="col-md-3">
+              <input required id="nameBroker" name="establishedSince" type="number" class="form-control input-md" >
+              <!-- <span class="help-block">help</span> -->
+              </div>
+            </div>
+            
+            <!-- Text input-->
+            <div class="form-group row">
+              <label class="col-md-2 control-label" for="textinput">Total Number of Students</label>  
+              <div class="col-md-3">
+              <input required id="nameBroker" name="totalNumberStudents" type="number" class="form-control input-md" >
+              <!-- <span class="help-block">help</span> -->
+              </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group row">
+              <label class="col-md-2 control-label" for="textinput">Total Number of Faculty</label>  
+              <div class="col-md-3">
+              <input required id="nameBroker" name="totalNumberFaculty" type="number" class="form-control input-md" >
+              <!-- <span class="help-block">help</span> -->
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">            
+                <!-- Button -->
+                <div class="form-group">
+                  <label class="col-md-4 control-label" for="singlebutton"></label>
+                  <div class="col-md-6" align="right">
+                    <button id="singlebutton" name="singlebutton" class="btn btn-primary">Request For Verification</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </form>
+
+
+	       </div>
+      </div>
+    </div>
+
+<script language="javascript">
+  populateCountries("country", "state"); // first parameter is id of country drop-down and second parameter is id 
+</script>
+
+{% endblock %}
