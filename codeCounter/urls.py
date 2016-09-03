@@ -15,14 +15,16 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from apps.demo.views import *
+# from apps.demo.views import *
 from apps.courseTube.views import *
 
 urlpatterns = [
 	url(r'^accounts/', include('allauth.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^$', home),
-    url(r'^index/', index),
+    url(r'^registerAsStudent/', registerAsStudent, name = "registerAsStudent"),
+    url(r'^registerAsInstitute/', registerAsInstitute, name = "registerAsInstitute"),
     url(r'^register_institute/', registerInstitute, name = "registerInstitute"),
+    # url(r'^institutesRequests/', institutesRequests, name = "institutesRequests"),
 
 ]

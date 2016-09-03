@@ -28,8 +28,14 @@ class Student(Model):
 	def __unicode__(self):
 		return self.user.first_name
 
+class InstituteProfile(Model):
+	user = OneToOneField(User, related_name="instituteProfile")
+	approved = BooleanField(default = False)
+	def __unicode__(self):
+		return self.user.first_name
+
 class Institute(Model):
-	registeredBy = ForeignKey(Student, blank=True, null=True)
+	registeredBy = ForeignKey(InstituteProfile, blank=True, null=True)
 	listed = BooleanField(default = False)
 	deleted = BooleanField(default = False)
 	name = CharField(max_length=100)

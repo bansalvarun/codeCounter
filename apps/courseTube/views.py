@@ -8,6 +8,40 @@ from models import *
 
 # Create your views here.
 
+def home(request):
+	return render(request, 'demo/home.html')
+
+
+@login_required
+def registerAsStudent(request):
+	print request.user.id
+	user = request.user
+	try:
+		student = Student.objects.get(user = request.user)
+		print student
+	except:
+		student = Student(user = user)
+		student.save()
+	return render(request, 'demo/home.html')
+
+
+@login_required
+def registerAsInstitute(request):
+	args = {}
+	user = request.user
+	try:
+		instituteProfile = InstituteProfile.objects.get(user = request.user)
+		print instituteProfile
+	except:
+		instituteProfile = InstituteProfile(user = user)
+		instituteProfile.save()
+	args["user"] = user
+	instituteProfile = InstituteProfile(user = user)
+	args["instituteProfile"] = instituteProfile
+
+	return render(request, 'demo/home.html')
+
+
 @login_required
 def registerInstitute(request):
 	args = {}
@@ -24,7 +58,7 @@ def registerInstitute(request):
 def requestInstitute(request):
 	if request.method=="POST":
 		institute = Institute(
-			registeredBy = Student.objects.get(user = request.user),
+			registeredBy = User.objects.get(user = request.user),
 			name = request.POST["name"],
 			address = request.POST["address"],
 			city = request.POST["city"],
@@ -41,3 +75,7 @@ def requestInstitute(request):
 			totalNumberStudents = request.POST["totalNumberStudents"],
 			totalNumberFaculty  = request.POST["totalNumberFaculty"]
 			)
+# @login_required
+# def institutesRequests(request):
+	
+
