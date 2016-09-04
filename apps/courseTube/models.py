@@ -77,6 +77,7 @@ class Institute(Model):
 	rating = FloatField(default = 0)
 	category = CharField(max_length=100, blank=True, null=True)
 
+
 class Faculty(Model):
 	name = CharField(max_length=100)
 	details = CharField(max_length=100, blank=True, null=True)
@@ -118,6 +119,7 @@ class Review(Model):
 	description = TextField(blank=True, null=True)
 	userUpVotes = ManyToManyField(Student, blank=True, related_name='likes')
 	userDownVotes = ManyToManyField(Student, blank=True, related_name='dislike')
+
 
 class ReviewRequest(Model):
 	approved = BooleanField(default = False) #once approved it get's deleted

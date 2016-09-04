@@ -152,33 +152,33 @@ def institute(request, id):
 			elif(x==2):	
 				student.tag2 = 1
 			elif(x==3):	
-				student.tag2 = 1
+				student.tag3 = 1
 			elif(x==4):	
-				student.tag2 = 1
+				student.tag4 = 1
 			elif(x==5):	
-				student.tag2 = 1
+				student.tag5 = 1
 			elif(x==6):	
-				student.tag2 = 1
+				student.tag6 = 1
 			elif(x==7):	
-				student.tag2 = 1
+				student.tag7 = 1
 			elif(x==8):	
-				student.tag2 = 1
+				student.tag8 = 1
 			elif(x==9):	
-				student.tag2 = 1
+				student.tag9 = 1
 			elif(x==10):	
-				student.tag2 = 1
+				student.tag10 = 1
 			elif(x==11):	
-				student.tag2 = 1
+				student.tag11 = 1
 			elif(x==12):	
-				student.tag2 = 1
+				student.tag12 = 1
 			elif(x==13):	
-				student.tag2 = 1
+				student.tag13 = 1
 			elif(x==14):	
-				student.tag2 = 1
+				student.tag14 = 1
 			elif(x==15):	
-				student.tag2 = 1
+				student.tag15 = 1
 			elif(x==16):	
-				student.tag2 = 1
+				student.tag16 = 1
 			student.save()
 	except:
 		print "No user logged in"
@@ -225,14 +225,48 @@ def postFeedback(request):
 			qualityOfEducation = request.POST["qualityOfEducation"]
 			)
 		review.save()
+		getRatingInsti()
 		return redirect("/institute/"+request.POST["instituteId"])
 
+def getRatingInsti():
+	insti = Institute.objects.all()
+	for i in insti:
+		allReviews = i.reviews.all()
+		mysum = 0
+		for j in allReviews:
+			mysum += j.qualityOfEducation
+		print mysum, 
+		print len(allReviews),
+		i.rating = mysum/float(len(allReviews))
+		print i.rating
+		i.save()
 def locationsOfInstitues(request):
 	args = {}
 	institutes = Institute.objects.all()
 	args["institutes"] = institutes
 	return render(request, "courseTube/locationsOfInstitutes.html", args)
 
+
+
+def createRandomReviews():
+	review = Review.objects.all()
+	for i in review:
+		i.delete()
+	students = Student.objects.all()
+	institutes = Institute.objects.all()
+	for student in students:
+		p = random.randrange(1,100)
+		for institute in institutes:
+			if(p%5):
+				review = Review(
+					student = student,
+					institute = institute, 
+					description = "This is a sample comment for sample data!",
+					qualityOfEducation = random.randrange(1,5,1)
+					)
+				review.save()
+	print "reviews done" 
+	getRatingInsti()
 
 
 
