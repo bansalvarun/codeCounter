@@ -146,6 +146,16 @@ def postFeedback(request):
 		review.save()
 		return redirect("/institute/"+request.POST["instituteId"])
 
+def locationsOfInstitues(request):
+	args = {}
+	institutes = Institutes.objects.all()
+	args["institutes"] = institutes
+	return render(request, "courseTable/locationsOfInstitues.html", args)
+
+
+
+
+
 def populateDatabaseRandom():
 	# tags = ["computer science","web development","android app","machine learning", 'entrance exam','AIPMT', 'IIT-JEE',"BITSAT", 'consultancy','higher education', 'career', 'test prep', 'upsc', 'general knowledge', 'interview', 'language']
 	# if(len(Tag.objects.all())<2):
