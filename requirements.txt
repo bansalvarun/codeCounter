@@ -3,6 +3,7 @@ argparse==1.2.1
 django-admin-sortable==2.0.19
 django-admin-tools==0.8.0
 django-allauth==0.27.0
+numpy==1.11.1
 oauthlib==1.1.2
 python-openid==2.2.5
 requests==2.11.1

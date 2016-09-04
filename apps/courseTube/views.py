@@ -5,38 +5,86 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.template.context_processors import csrf
+import json
 # from django.core.
 import random
 # import matplotlib.pyplot as plt
 import numpy as np
-from sklearn.manifold import TSNE
-from sklearn import cluster
+# from sklearn.manifold import TSNE
+# from sklearn import cluster
 from sets import Set
 
 from models import *
 # Create your views here.
 
-def recommend_cluster(adj_user_tag, user_number):
-	if len(adj_user_tag == 0):
-		return
-	num_of_users = len(adj_user_tag)
-	num_of_tags = len(adj_user_tag[0])
 
+tags = ["computer science","web development","android app","machine learning", 'entrance exam','AIPMT', 'IIT-JEE',"BITSAT", 'consultancy','higher education', 'career', 'test prep', 'upsc', 'general knowledge', 'interview', 'language']
+
+def recommend_cluster(cur_user):
+	tags = ["computer science","web development","android app","machine learning", 'entrance exam','AIPMT', 'IIT-JEE',"BITSAT", 'consultancy','higher education', 'career', 'test prep', 'upsc', 'general knowledge', 'interview', 'language']
+	students = Student.objects.all()
+	num_of_users = len(students)
+	print "ahhah"
+	num_of_tags = 16
 	similar_users = Set([])
+	similar_institutes = Set([])
 	sqrt_n = int(num_of_tags**0.5) # divide cluster into sqrt n chunks
 	for sqrt_comp in xrange(0, num_of_tags, sqrt_n):
-		for user_no in xrange(0, num_of_users):
-			if user_no == user_number:
-				continue
-			bits = 0
-			user_bits = 0
-			for tag_no in xrange(sqrt_comp, sqrt_comp + sqrt_n):
-				bits = bits*10 + adj_users_tag[user_no][tag_no]
-				user_bits = user_bits*10 + adj_users_tag[user_number][tag_no]
-			if bits == user_bits:
-				similar_users.add(user_no)
-	
-	print similar_users
+		for student in students:
+			if(student.id != cur_user.id):
+				bits = 0
+				user_bits = 0;
+				if sqrt_comp == 0:
+					bits = int(student.tag1) + int(student.tag2) + int(student.tag3) + int(student.tag4) 
+					user_bits = int(cur_user.tag1) + int(cur_user.tag2) + int(cur_user.tag3) + int(cur_user.tag4)
+					favorable_tags = [tags[cur_user.tag1+1], tags[cur_user.tag2+1], tags[cur_user.tag3+1], tags[cur_user.tag4+1]]
+					if bits == user_bits:
+						for i in favorable_tags:
+							tag = Tag.objects.get(name = i)
+							print tag
+							c = tag.tags.all()
+							print c
+							for j in c:
+								similar_institutes.add(j)
+				elif sqrt_comp == 1:
+					bits = int(student.tag5) + int(student.tag6) + int(student.tag7) + int(student.tag8) 
+					user_bits = int(cur_user.tag5) + int(cur_user.tag6) + int(cur_user.tag7) + int(cur_user.tag8)
+					favorable_tags = [tags[cur_user.tag5-1], tags[cur_user.tag6-1], tags[cur_user.tag7-1], tags[cur_user.tag8-1]]
+					if bits == user_bits:
+						for i in favorable_tags:
+							tag = Tag.objects.get(name = i)
+							c = tag.tags.all()
+							print c
+							for j in c:
+								similar_institutes.add(j)
+
+				elif sqrt_comp == 2:
+					bits = int(student.tag9) + int(student.tag10) + int(student.tag11) + int(student.tag12) 
+					user_bits = int(cur_user.tag9) + int(cur_user.tag10) + int(cur_user.tag11) + int(cur_user.tag12)
+					favorable_tags = [tags[cur_user.tag9-1], tags[cur_user.tag10-1], tags[cur_user.tag11-1], tags[cur_user.tag12-1]]
+					if bits == user_bits:
+						for i in favorable_tags:
+							tag = Tag.objects.get(name = i)
+							c = tag.tags.all()
+							print c
+							for j in c:
+								similar_institutes.add(j)
+
+				elif sqrt_comp == 3:
+					bits = int(student.tag13) + int(student.tag14) + int(student.tag15) + int(student.tag16) 
+					user_bits = int(cur_user.tag13) + int(cur_user.tag14) + int(cur_user.tag15) + int(cur_user.tag16)
+					favorable_tags = [tags[cur_user.tag13-1], tags[cur_user.tag14-1], tags[cur_user.tag15-1], tags[cur_user.tag16-1]]
+					if bits == user_bits:
+						for i in favorable_tags:
+							tag = Tag.objects.get(name = i)
+							c = tag.tags.all()
+							print c
+							for j in c:
+								similar_institutes.add(j)
+
+	print cur_user.id, "cur_user.id"
+	print similar_institutes
+	return similar_institutes
 
 
 # def plot_cluster(point_label, adj_users_tag):
@@ -48,16 +96,15 @@ def recommend_cluster(adj_user_tag, user_number):
 # 	plt.title("Clutser")
 # 	plt.show()
 
-tags = ["computer science","web development","android app","machine learning", 'entrance exam','AIPMT', 'IIT-JEE',"BITSAT", 'consultancy','higher education', 'career', 'test prep', 'upsc', 'general knowledge', 'interview', 'language']
 
 def home(request):
 	args = {}
-	# try:
-	# 	student = Student.objects.get(user = request.user)
-	
-	# else:
-	institutes = Institute.objects.order_by('rating')[0:10]
-	trendings = Institute.objects.order_by('rating')[0:10]
+	try:
+		student = Student.objects.get(user = request.user)
+		institutes = list(recommend_cluster(student))[:10]
+	except:
+		institutes = Institute.objects.order_by('-rating')
+	trendings = Institute.objects.order_by('-rating')[:10]
 	tags = Tag.objects.all()
 	args["institutes"] = institutes
 	args["tags"] = tags
@@ -212,8 +259,14 @@ def compare(request):
 	args = {}
 	institutes = Institute.objects.all()
 	args["institutes"] = institutes
-	return render(request, 'courseTube/institutes.html', args) 
-
+	args["insti"] = []
+	args["rating"] = []
+	for i in institutes:
+		print i
+		args["insti"].append(i.name)
+		args["rating"].append(i.rating)
+	args["insti"] = json.dumps(args["insti"] )
+	return render(request, 'courseTube/compare.html', args)
 swearWords = ['anal','anus','arse','ass','ballsack','balls','bastard','bitch','biatch','bloody','blowjob','blow job','bollock','bollok','boner','boob',"bugger","bum","butt","buttplug","clitoris","cock",'coon','crap','cunt',"damn",'dick','dildo','dyke','fag','feck','fellate','fellatio','felching','fuck','f u c k','fudgepacker','fudge', 'packer','flange','Goddamn','God' 'damn','hell','homo','jerk','jizz','knobend','knob end','labia','lmao','lmfao','muff','nigger','nigga','omg','penis','piss','poop','prick','pube','pussy','queer','scrotum',"sex",'shit','shit','sh1t','slut','smegma','spunk','tit','tosser','turd',"twat","vagina","wank","whore","wtf"]
 
 @login_required
@@ -244,6 +297,7 @@ def getRatingInsti():
 		print mysum, 
 		print len(allReviews),
 		i.rating = mysum/float(len(allReviews))
+		i.rating = ("%.2f" % i.rating)
 		print i.rating
 		i.save()
 def locationsOfInstitues(request):
@@ -254,7 +308,7 @@ def locationsOfInstitues(request):
 
 
 
-def createRandomReviews():
+def createRandomReviews(request):
 	review = Review.objects.all()
 	for i in review:
 		i.delete()
@@ -273,8 +327,26 @@ def createRandomReviews():
 				review.save()
 	print "reviews done" 
 	getRatingInsti()
+	return HttpResponse("ok")
 
 
+def fixStudentsName(request):
+	x = "shivani isha smt shyani devi divya mansi mazida pooja kajal meena sonam buity hina shakshi sagar pooja anita neetu anshu d/o kanika kathuria manju shakshi anita reena neha khushboo aasmin jyoti riya masi rekha leela with a child isha gulshan priya jain pooja rakhi @payal versha sunita nitu kumari vandana roshni parveen versa kavita pooja sarojani nagina tapas das priyanka santna khushbu pooja any bobby deeya kumari anjali juneja anjali @ babli champa karketta anshu monika rimmi singh aanamika misra chahat manju nagma khatoon pooja sonam koshal laxmi devi w/o late sh hukan chand sandhya poonam sna nikita senger layba noor iqra salima naziya siddiqui priti kamni sandhya renu @ rinki priya pooja minakchi ruby smt.farhana baigum sheetal kalyani patro anjali priyanka palak @ simran babita gurdeep kaur dhanwanti devi fooljhnah vandana smt. gyatri devi shehnaz kajal pooja ranju barjraj ramdin verma sharat chandran birender mandal amit kushal kasid shiv prakash vikram singh sanjay abhi ram dutt gupta khadak singh gurmit singh chanderpal aman khursid rajeev durgesh nahar singh ram kumar sunder paal maansingh aswal rohit rohit sparsh santosh santosh punit khandelwal dinesh gulshan arvind kumar yadav nausad gurmit singh md. afsar shiv shakti singh moti lal kausal kumar rohit rohit mohabbat ali raj kumar jaswant singh sevak @ pitambar lal chotelal amit rupesh midda dharam singh manoj yadav @ manoj ram singh preetam kumar ram kumar sarain pankaj kumar sheak shakir riyasat ali vinit katariya sumit arindra kali charan badshya khan vikash devinder chadda aman mohan singh hemant shivam yash mittal aakash chandesh sumit mitra supriyal sen gajender singh @ goldy pooran chand sharma irfan azaruddin mukul yadav pooran chand sharma manoj sanjay charee raja babu pawan sandeep rajkumar chawla parvesh mohd ataullah neeraj kumar jamil khan yogita rijul aggarwal mohd shakib rahul kumar rajender suraj rizwan sandeep md mustafa har parsad deepak vidhi"
+	x = x.split()
+	print x
+	students = Student.objects.all()
+	i = 0
+	for student in students:
+		while(i!= "" or i != "@"):
+			i+=1
+			if(i>=len(x)):
+				break
+		if(i>=len(x)):
+			break
+		student.name = x[i]
+		i+=1
+
+	return HttpResponse("ok")
 
 
 def populateDatabaseRandom():

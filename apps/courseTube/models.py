@@ -89,7 +89,7 @@ class Faculty(Model):
 
 class Course(Model):
 	name = CharField(max_length=100)
-	tags = ManyToManyField(Tag)
+	tags = ManyToManyField(Tag, related_name = "courses")
 	faculty = ManyToManyField(Faculty, blank=True)
 	institute = ForeignKey(Institute, blank=True, null=True, related_name="coursesInstitute")
 	students = ManyToManyField(Student, blank=True)

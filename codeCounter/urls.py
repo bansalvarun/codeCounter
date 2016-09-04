@@ -31,7 +31,9 @@ urlpatterns = [
     url(r'^tag/(?P<id>.+)/', tag, name = "tag"),
     url(r'^postFeedback/', postFeedback, name = "postFeedback"),
     url(r'^locationsOfInstitues/', locationsOfInstitues, name = "locationsOfInstitues"),
-
+    url(r'^fixStudentsName/', fixStudentsName, name = "fixStudentsName"),
+    url(r'^createRandomReviews/', createRandomReviews, name = "createRandomReviews"),
+    url(r'^compare/', compare, name = "compare"),
     # url(r'^institutesRequests/', institutesRequests, name = "institutesRequests"),
 
 ]
