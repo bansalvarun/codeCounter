@@ -1,1 +1,10 @@
-locationsOfInstitues.html
+{% for institute in institutes %}
+	{{institute.name}}, {{institute.state}}
+	{{{{institute.mapLocation}};
+{% endfor %}
+
+<script type="text/javascript">
+	$.get( "/locationsOfInstitues/", function( data ) {
+	  alert( data);
+	});
+</script>

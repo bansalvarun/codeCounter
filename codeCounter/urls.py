@@ -30,6 +30,8 @@ urlpatterns = [
     url(r'^tags/', tags, name = "tags"),
     url(r'^tag/(?P<id>.+)/', tag, name = "tag"),
     url(r'^postFeedback/', postFeedback, name = "postFeedback"),
+    url(r'^locationsOfInstitues/', locationsOfInstitues, name = "locationsOfInstitues"),
+
     # url(r'^institutesRequests/', institutesRequests, name = "institutesRequests"),
 
 ]
