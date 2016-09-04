@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
-{% block title %}Projects{% endblock %}
+{% block title %}{{institute.name}}{% endblock %}
 {% block body %}
 	<script src="{%static 'js/jquery.rating.js' %}"></script>
 	<link rel="stylesheet" href="{%static 'css/jquery.rating.css' %}">
@@ -22,7 +22,7 @@
             <div class="col-md-9">
 
                 <div class="thumbnail">
-                    <img class="img-responsive" src="{{institute.logo}}" alt="hello" style="padding:px;">
+                    <img class="img-responsive" src="{{institute.logo}}" alt="hello" style="padding: 100px;">
                     <div class="caption-full">
                         <h4><a href="{{institute.instituteUrl}}">{{institute.name}}</a>
                         </h4>
