@@ -123,13 +123,16 @@ def compare(request):
 	args["institutes"] = institutes
 	return render(request, 'courseTube/institutes.html', args) 
 
-
+swearWords = ['anal','anus','arse','ass','ballsack','balls','bastard','bitch','biatch','bloody','blowjob','blow job','bollock','bollok','boner','boob',"bugger","bum","butt","buttplug","clitoris","cock",'coon','crap','cunt',"damn",'dick','dildo','dyke','fag','feck','fellate','fellatio','felching','fuck','f u c k','fudgepacker','fudge', 'packer','flange','Goddamn','God' 'damn','hell','homo','jerk','jizz','knobend','knob end','labia','lmao','lmfao','muff','nigger','nigga','omg','penis','piss','poop','prick','pube','pussy','queer','scrotum',"sex",'shit','shit','sh1t','slut','smegma','spunk','tit','tosser','turd',"twat","vagina","wank","whore","wtf"]
 
 @login_required
 def postFeedback(request):
 	student = get_object_or_404(Student, user = request.user)
 	if request.method == "POST":
 		institute = get_object_or_404(Institute, pk=request.POST["instituteId"])
+		for i in swearWords:
+			if i in request.POST["description"]:
+				return HttpResponse("You are not allowed to use swear words!")
 		review = Review(
 			student = student,
 			institute = institute, 
