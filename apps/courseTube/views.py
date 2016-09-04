@@ -7,14 +7,53 @@ from django.contrib.auth.decorators import login_required
 from django.template.context_processors import csrf
 # from django.core.
 import random
-
+# import matplotlib.pyplot as plt
+# from sklearn.manifold import TSNE
+# from sklearn import cluster
+from sets import Set
 
 from models import *
 # Create your views here.
 
+def recommend_cluster(adj_user_tag, user_number):
+	if len(adj_user_tag == 0):
+		return
+	num_of_users = len(adj_user_tag)
+	num_of_tags = len(adj_user_tag[0])
+
+	similar_users = Set([])
+	sqrt_n = int(num_of_tags**0.5) # divide cluster into sqrt n chunks
+	for sqrt_comp in xrange(0, num_of_tags, sqrt_n):
+		for user_no in xrange(0, num_of_users):
+			if user_no == user_number:
+				continue
+			bits = 0
+			user_bits = 0
+			for tag_no in xrange(sqrt_comp, sqrt_comp + sqrt_n):
+				bits = bits*10 + adj_users_tag[user_no][tag_no]
+				user_bits = user_bits*10 + adj_users_tag[user_number][tag_no]
+			if bits == user_bits:
+				similar_users.add(user_no)
+	
+	print similar_users
+
+
+# def plot_cluster(point_label, adj_users_tag):
+# 	model = TSNE(learning_rate = 200.0)
+# 	tsne_data = model.fit_transform(adj_users_tag)
+
+# 	print "Points labels : " + str(point_label)
+# 	plt.scatter(tsne_data[:,0], tsne_data[:,1], c = point_label)
+# 	plt.title("Clutser")
+# 	plt.show()
+
 def home(request):
 	args = {}
-	institutes = Institute.objects.all()
+	# try:
+	# 	student = Student.objects.get(user = request.user)
+	
+	# else:
+	institutes = Institute.objects.order_by('rating')[0:10]
 	args["institutes"] = institutes
 	return render(request, 'demo/home.html', args)
 
@@ -148,9 +187,9 @@ def postFeedback(request):
 
 def locationsOfInstitues(request):
 	args = {}
-	institutes = Institutes.objects.all()
+	institutes = Institute.objects.all()
 	args["institutes"] = institutes
-	return render(request, "courseTable/locationsOfInstitues.html", args)
+	return render(request, "courseTube/locationsOfInstitutes.html", args)
 
 
 

@@ -1,0 +1,99 @@
+
+
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}Projects{% endblock %}
+{% block body %}
+
+	<div class="row" style="padding-top : 30px">
+		<div class="col-md-2"></div>
+		<div class="col-md-4">Select category</div>
+        <div class="col-md-4">
+			<div id="map" style="width:500px; height:500px; border: 2px solid #000"></div>
+		</div>
+	</div>
+
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBji0aeRENksJFuJHRJvLHl8_7V6MxDWz0&callback=initMap&&libraries=geometry"
+		async defer></script>
+	<script>
+		location_label = [];
+		coordinates = [];
+		{% for institute in institutes %}
+			var latLng = '{{institute.mapLocation}}'.split('@')[1];
+			latLng = String(latLng).split(',');
+			var lat = latLng[0];
+			var lng = latLng[1];
+			coordinates.push([parseFloat(lat), parseFloat(lng)]);
+			location_label.push('{{institute.name}}');
+		{% endfor %}
+		console.log(coordinates);
+		console.log(location_label);
+		var flag = 1;
+		
+
+		function initMap() {
+
+			var map = new google.maps.Map(document.getElementById('map'), {
+				center: {lat: 28.632746799225853, lng: 77.22049713134766},
+				scrollwheel: false,
+				zoom: 12
+			});
+
+			var radius = 5;
+			
+			convert_coordinates = [];
+			for (var i = 0; i < coordinates.length; i++) {
+				convert_coordinates.push(new google.maps.LatLng(coordinates[i][0], coordinates[i][1]));	
+			}
+
+			google.maps.event.addListener(map, 'click', function(event) {
+				addMarkerGreen(event.latLng, map, "your location");
+				map.setCenter(new google.maps.LatLng(event.latLng.lat(), event.latLng.lng()));
+				cur_convert_coordinate = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+				for (var i = 0; i < convert_coordinates.length; i++) {
+					var distance = google.maps.geometry.spherical.computeDistanceBetween(convert_coordinates[i],cur_convert_coordinate);
+					console.log(distance/1000.0);
+					if (distance/1000.0 < radius)
+						addMarkerRed({lat: coordinates[i][0], lng: coordinates[i][1]}, map, location_label[i]);
+				}
+			});
+		};
+
+		function addMarkerGreen(location, map, mark_title, cur_loc_flag) {
+			setTimeout(function() {
+				var marker = new google.maps.Marker({
+					position: location,
+					title: mark_title,
+					map: map,
+					icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+				});
+			}, 400);
+		};
+
+		function addMarkerRed(location, map, mark_title, cur_loc_flag) {
+			setTimeout(function() {
+				console.log(cur_loc_flag);
+				var marker = new google.maps.Marker({
+					position: location,
+					title: mark_title,
+					map: map,
+					icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+				});
+			}, 400);
+		};
+
+	</script>
+{% endblock %}
+
+<!-- {% for institute in institutes %}
+	{{institute.name}}, {{institute.state}}<br/>
+	{{institute.mapLocation}};<br/><br/>
+{% endfor %} -->
+
+<!-- 
+<script type="text/javascript">
+	$.get( "/locationsOfInstitues/", function( data ) {
+	  alert( data);
+	});
+</script> -->
