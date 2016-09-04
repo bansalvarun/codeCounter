@@ -231,11 +231,7 @@ def locationsOfInstitues(request):
 	args = {}
 	institutes = Institute.objects.all()
 	args["institutes"] = institutes
-<<<<<<< HEAD
 	return render(request, "courseTube/locationsOfInstitutes.html", args)
-=======
-	return render(request, "courseTable/locationsOfInstitues.html",)
->>>>>>> b685e5b08f1783e86cb5136f6aabd06d2ca708f7
 
 
 
