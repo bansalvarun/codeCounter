@@ -46,6 +46,7 @@ def recommend_cluster(adj_user_tag, user_number):
 # 	plt.scatter(tsne_data[:,0], tsne_data[:,1], c = point_label)
 # 	plt.title("Clutser")
 # 	plt.show()
+tags = ["computer science","web development","android app","machine learning", 'entrance exam','AIPMT', 'IIT-JEE',"BITSAT", 'consultancy','higher education', 'career', 'test prep', 'upsc', 'general knowledge', 'interview', 'language']
 
 def home(request):
 	args = {}
@@ -140,6 +141,47 @@ def institute(request, id):
 	args.update(csrf(request))
 	institute = Institute.objects.get(pk=id)
 	args["institute"] = institute
+	print institute.tags.all()
+	try:
+		print request.user.id
+		student = Student.objects.get(user = request.user)
+		for i in institute.tags.all():
+			x = tags.index(i.name) + 1
+			if(x==1):
+				student.tag1 = 1
+			elif(x==2):	
+				student.tag2 = 1
+			elif(x==3):	
+				student.tag2 = 1
+			elif(x==4):	
+				student.tag2 = 1
+			elif(x==5):	
+				student.tag2 = 1
+			elif(x==6):	
+				student.tag2 = 1
+			elif(x==7):	
+				student.tag2 = 1
+			elif(x==8):	
+				student.tag2 = 1
+			elif(x==9):	
+				student.tag2 = 1
+			elif(x==10):	
+				student.tag2 = 1
+			elif(x==11):	
+				student.tag2 = 1
+			elif(x==12):	
+				student.tag2 = 1
+			elif(x==13):	
+				student.tag2 = 1
+			elif(x==14):	
+				student.tag2 = 1
+			elif(x==15):	
+				student.tag2 = 1
+			elif(x==16):	
+				student.tag2 = 1
+			student.save()
+	except:
+		print "No user logged in"
 	return render(request, 'courseTube/institute.html', args)
 
 def category(request, categoryId):
@@ -189,14 +231,17 @@ def locationsOfInstitues(request):
 	args = {}
 	institutes = Institute.objects.all()
 	args["institutes"] = institutes
+<<<<<<< HEAD
 	return render(request, "courseTube/locationsOfInstitutes.html", args)
+=======
+	return render(request, "courseTable/locationsOfInstitues.html",)
+>>>>>>> b685e5b08f1783e86cb5136f6aabd06d2ca708f7
 
 
 
 
 
 def populateDatabaseRandom():
-	# tags = ["computer science","web development","android app","machine learning", 'entrance exam','AIPMT', 'IIT-JEE',"BITSAT", 'consultancy','higher education', 'career', 'test prep', 'upsc', 'general knowledge', 'interview', 'language']
 	# if(len(Tag.objects.all())<2):
 	# 	for _tag in tags:
 	# 		tag = Tag(name = _tag)

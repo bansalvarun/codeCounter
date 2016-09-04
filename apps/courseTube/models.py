@@ -25,6 +25,22 @@ class WeekDays(Model):
 
 class Student(Model):
 	user = OneToOneField(User, related_name="studentProfile")
+	tag1 = IntegerField(default = 0)
+	tag2 = IntegerField(default = 0)
+	tag3 = IntegerField(default = 0)
+	tag4 = IntegerField(default = 0)
+	tag5 = IntegerField(default = 0)
+	tag6 = IntegerField(default = 0)
+	tag7 = IntegerField(default = 0)
+	tag8 = IntegerField(default = 0)
+	tag9 = IntegerField(default = 0)
+	tag10 = IntegerField(default = 0)
+	tag11 = IntegerField(default = 0)
+	tag12 = IntegerField(default = 0)
+	tag13 = IntegerField(default = 0)
+	tag14 = IntegerField(default = 0)
+	tag15 = IntegerField(default = 0)
+	tag16 = IntegerField(default = 0)
 	def __unicode__(self):
 		return self.user.first_name
 
