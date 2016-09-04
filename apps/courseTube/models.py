@@ -55,7 +55,7 @@ class Institute(Model):
 	listed = BooleanField(default = False)
 	deleted = BooleanField(default = False)
 	name = CharField(max_length=100, blank=True, null=True)
-	logo = CharField(max_length=100, default="https://placeholdit.imgix.net/~text?txtsize=33&txt=350%C3%97150&w=350&h=150")
+	logo = CharField(max_length=100, default="http://cometoart.com/wp-content/uploads/2016/03/pojo-placeholder-2.png")
 	instituteUrl = CharField(max_length=100, blank=True, null=True)
 	description = TextField(blank=True, null=True)
 	email = EmailField(blank=True, null=True)
