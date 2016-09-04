@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.template.context_processors import csrf
-from models import *
+# from django.core.
+import random
 
+
+from models import *
 # Create your views here.
 
 def home(request):
@@ -141,3 +145,96 @@ def postFeedback(request):
 			)
 		review.save()
 		return redirect("/institute/"+request.POST["instituteId"])
+
+def populateDatabaseRandom():
+	# tags = ["computer science","web development","android app","machine learning", 'entrance exam','AIPMT', 'IIT-JEE',"BITSAT", 'consultancy','higher education', 'career', 'test prep', 'upsc', 'general knowledge', 'interview', 'language']
+	# if(len(Tag.objects.all())<2):
+	# 	for _tag in tags:
+	# 		tag = Tag(name = _tag)
+	# 		tag.save()
+	# print "tags done"
+	tags = Tag.objects.all()
+	# if(len(Student.objects.all())<20):
+	# 	x = "shivani isha smt shyani devi divya mansi mazida pooja kajal meena sonam buity hina shakshi sagar pooja anita neetu anshu d/o kanika kathuria manju shakshi anita reena neha khushboo aasmin jyoti riya masi rekha leela with a child isha gulshan priya jain pooja rakhi @payal versha sunita nitu kumari vandana roshni parveen versa kavita pooja sarojani nagina tapas das priyanka santna khushbu pooja any bobby deeya kumari anjali juneja anjali @ babli champa karketta anshu monika rimmi singh aanamika misra chahat manju nagma khatoon pooja sonam koshal laxmi devi w/o late sh hukan chand sandhya poonam sna nikita senger layba noor iqra salima naziya siddiqui priti kamni sandhya renu @ rinki priya pooja minakchi ruby smt.farhana baigum sheetal kalyani patro anjali priyanka palak @ simran babita gurdeep kaur dhanwanti devi fooljhnah vandana smt. gyatri devi shehnaz kajal pooja ranju barjraj ramdin verma sharat chandran birender mandal amit kushal kasid shiv prakash vikram singh sanjay abhi ram dutt gupta khadak singh gurmit singh chanderpal aman khursid rajeev durgesh nahar singh ram kumar sunder paal maansingh aswal rohit rohit sparsh santosh santosh punit khandelwal dinesh gulshan arvind kumar yadav nausad gurmit singh md. afsar shiv shakti singh moti lal kausal kumar rohit rohit mohabbat ali raj kumar jaswant singh sevak @ pitambar lal chotelal amit rupesh midda dharam singh manoj yadav @ manoj ram singh preetam kumar ram kumar sarain pankaj kumar sheak shakir riyasat ali vinit katariya sumit arindra kali charan badshya khan vikash devinder chadda aman mohan singh hemant shivam yash mittal aakash chandesh sumit mitra supriyal sen gajender singh @ goldy pooran chand sharma irfan azaruddin mukul yadav pooran chand sharma manoj sanjay charee raja babu pawan sandeep rajkumar chawla parvesh mohd ataullah neeraj kumar jamil khan yogita rijul aggarwal mohd shakib rahul kumar rajender suraj rizwan sandeep md mustafa har parsad deepak vidhi"
+	# 	file = x.split()
+	# 	for i in file:
+	# 		print i
+	# 		try:
+	# 			user = User.objects.get(user = str(i))
+	# 		except:
+	# 			user=User.objects.create_user(str(i), password=str(i))
+	# 			user.is_superuser=False
+	# 			user.is_staff=False
+	# 			user.save()
+	# 			student = Student(user=user)
+	# 			student.save()
+
+	# print "students done"
+	# if(len(InstituteProfile.objects.all())<20):
+	# 	file = "OLIVER JACK HARRY JACOB CHARLIE THOMAS GEORGE OSCAR JAMES WILLIAM NOAH ALFIE JOSHUA MUHAMMAD HENRY LEO ARCHIE ETHAN JOSEPH FREDDIE SAMUEL ALEXANDER LOGAN DANIEL ISAAC MAX MOHAMMED BENJAMIN MASON LUCAS EDWARD HARRISON JAKE DYLAN RILEY FINLEY THEO SEBASTIAN ADAM ZACHARY ARTHUR TOBY JAYDEN LUKE HARLEY LEWIS TYLER HARVEY MATTHEW DAVID REUBEN MICHAEL ELIJAH KIAN "
+	# 	# file = open("/staticfiles/media/americanNames.txt", "r")
+	# 	file = file.split()
+	# 	for i in file:
+	# 		try:
+	# 			user = User.objects.get(user = str(i))
+	# 		except:
+	# 			user=User.objects.create_user(str(i), password=str(i))
+	# 			user.is_superuser=False
+	# 			user.is_staff=False
+	# 			user.save()
+	# 			instituteProfile = InstituteProfile(user=user)
+	# 			instituteProfile.save()
+
+	# print "institute profiles done"
+	for i in Institute.objects.all():
+		i.delete()
+	if( len(Institute.objects.all())<20):
+		instituteProfile = InstituteProfile.objects.all()
+		for i in instituteProfile:
+			institute = Institute(
+				registeredBy = i,
+				listed = True,
+				name = str(i.user) + " Classes",
+				instituteUrl  = str(i) + ".com",
+				description = "This is dummy data created to make analysis and make results",
+				email = str(i)+"@gmail.com",
+				phone = "72133" + str(random.randrange(340, 955,1)),
+				address = "Some random address",
+				city = "Delhi",
+				pincode = "1" + str(random.randrange(10000, 12000,1)),
+				# tags = [],
+				# facility = [],
+				# weekdays = [],
+				state = "Delhi",
+				country = "India",
+				mapLocation = "https://www.google.co.in/maps/@28.6327"+str(random.randrange(0,1000,1))+",77.2204"+str(random.randrange(0,1000,1))+",15z?hl=en",
+				establishedSince= 1980 + random.randrange(0,30,1),
+				totalNumberStudents = '100',
+				totalNumberFaculty = '100',
+				startHour = 8,
+				endHour = 16
+				)
+			institute.save()
+# populateDatabaseRandom()
+ 
+#from apps.courseTube.views import *
+			
+			for weekday in WeekDays.objects.all():
+				if(weekday.id<5):
+					institute.weekdays.add(weekday)
+			for tag in tags:
+				p = random.randrange(0,100,1)
+				if(p%2):
+					institute.tags.add(tag)
+			institute.save()
+
+	print "institutes done"
+
+
+
+
+
+
+
+
+
