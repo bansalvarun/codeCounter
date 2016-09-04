@@ -45,23 +45,22 @@
         <div class="row">
           <div class="col-md-3">
           <h4 align="center"><span >Quick Links</span></h4>
-              <div class="panel panel-default">
+              <!-- <div class="panel panel-default">
                 <div class="panel-heading">
                   <h3 class="panel-title">Entrance Exams</h3>
                 <div class="panel-body">
-                  <button class="btn btn-default" disabled="">IIT-JEE</button>
-                  <button class="btn btn-default" disabled="">AIPMT</button>
-                  
+                                   
                 </div>
                 </div>
-              </div>
+              </div> -->
               <div class="panel panel-default">
                 <div class="panel-heading">
-                  <h3 class="panel-title">Computer Science</h3>
-                <div class="panel-body">
-                  <button class="btn btn-default" disabled="">Coding Blocks</button>
-                  <button class="btn btn-default" disabled="">Coding Ninja</button>
-                </div>
+                  <h3 class="panel-title">Tags</h3>
+                  <div class="panel-body">
+                    {% for tag in tags %}
+                      <button class="btn btn-default" disabled="">{{tag.name}}</button>
+                    {% endfor %} 
+                  </div>
                 </div>
               </div>
 
@@ -73,11 +72,12 @@
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <div class="row">
-                  <div class="col-md-6" style="float:left">
+                  <!-- <div class="col-md-6" style="float:left">
                     <h3 class="panel-title">{{institue.image}}</h3>
-                  </div>
-                  <div class="col-md-6" style="float:left">
-                    <h3 class="panel-title">{{institute.name}}, {{institute.state}} {{institute.rating}}</h3>
+                  </div> -->
+                  <div class="col-md-6">
+                    <h3 class="panel-title" style="display:inline-block;" align="left"><a href="/institute/{{institute.id}}">{{institute.name}}, {{institute.state}}</a></h3> 
+                    <p class="" style="display:inline-block; font-size:16px; float:right; padding-top:10px;" align="right">{{institute.rating}}</p>
                   </div>
                   </div>
                   <div class="panel-body">
@@ -89,10 +89,11 @@
           </div>
           <div class="col-md-3">
           <h4 align="center"><span >Trending</span></h4>
-            {% for institute in institutes %}
+            {% for institute in trendings %}
               <div class="panel panel-default">
                 <div class="panel-heading">
-                  <h3 class="panel-title">{{institute.name}}, {{institute.state}} {{institute.rating}}</h3>
+                  <h3 class="panel-title" style="display:inline-block;" align="left"><a href="/institute/{{institute.id}}">{{institute.name}}, {{institute.state}}</a> </h3>
+                  <p style="display:inline-block; font-size:16px; float:right; padding-top:10px;" align="right"> {{institute.rating}} </p>
                 <div class="panel-body">
                   {{institute.description}}
                 </div>

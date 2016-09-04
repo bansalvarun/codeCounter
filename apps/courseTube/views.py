@@ -8,8 +8,9 @@ from django.template.context_processors import csrf
 # from django.core.
 import random
 # import matplotlib.pyplot as plt
-# from sklearn.manifold import TSNE
-# from sklearn import cluster
+import numpy as np
+from sklearn.manifold import TSNE
+from sklearn import cluster
 from sets import Set
 
 from models import *
@@ -46,6 +47,7 @@ def recommend_cluster(adj_user_tag, user_number):
 # 	plt.scatter(tsne_data[:,0], tsne_data[:,1], c = point_label)
 # 	plt.title("Clutser")
 # 	plt.show()
+
 tags = ["computer science","web development","android app","machine learning", 'entrance exam','AIPMT', 'IIT-JEE',"BITSAT", 'consultancy','higher education', 'career', 'test prep', 'upsc', 'general knowledge', 'interview', 'language']
 
 def home(request):
@@ -55,7 +57,11 @@ def home(request):
 	
 	# else:
 	institutes = Institute.objects.order_by('rating')[0:10]
+	trendings = Institute.objects.order_by('rating')[0:10]
+	tags = Tag.objects.all()
 	args["institutes"] = institutes
+	args["tags"] = tags
+	args["trendings"] = trendings
 	return render(request, 'demo/home.html', args)
 
 
